@@ -1,0 +1,29 @@
+#Installing Packages to Nodes through Yaml Scripts
+##################################################
+# Author Name - Mahalingam G
+# Version     - 1.0
+# Date        - 25-05-2024
+# Time        - 11:21AM (Asian Kolkata)
+##################################################
+---
+- name: Install & Start the Package to Nodes
+# Selecting the Nodes
+  hosts: all 
+  become: true
+
+# Installing Httpd in Nodes
+  tasks:
+   - name: Install httpd
+     yum:
+      name: httpd
+      state: present
+
+# Starting Httpd in Nodes
+   - name: Start httpd
+     service:
+      name: httpd
+      state: started
+   
+
+     
+     
