@@ -1,0 +1,38 @@
+#Copy File from Server to Nodes
+#######################################################
+# Author Name - Mahalingam G
+# Version     - 1.0
+# Date        - 25-05-2024
+# Time        - 12:40 (Asian Kolkata)
+#######################################################
+---
+ - name: Copying File From Server to Webserver Group Nodes
+   hosts: webservers
+   become: yes
+
+   tasks:
+# checking httpd installed in all servers or not 
+    - name: Checking HTTPD installed or not
+      state:
+       path: /etc/init.d/httpd
+      register: httpd_service
+
+# Install HTTPD in servers if not there
+    - name: Installing httpd service
+      yum:
+       name: httpd
+       state: present
+
+# Check service is running or not
+    - name: Checking http Service
+      service:
+       name: httpd
+       state: started
+       enable: yes
+
+# Copy index.html to /var/www/html 
+    - name: Copying index.html to all nodes (From server to Node (/var/www/html) )
+      copy:
+       src: index.html
+       dest: /var/www/html/index.html
+       mode: 0644

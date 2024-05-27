@@ -1,0 +1,27 @@
+#Stop & Remove Packages from Nodes through Yaml Scripts
+#######################################################
+# Author Name - Mahalingam G
+# Version     - 1.0
+# Date        - 25-05-2024
+# Time        - 11:52AM (Asian Kolkata)
+#######################################################
+---
+- name: Stop and Remove the Packages from Nodes 
+  hosts: webservers[0] # Removing package from particular node under webservers group
+  become: true
+
+
+  tasks:
+  # Stopping Service from the particular node
+   - name: Stop Service from Particular Node
+     service:
+      name: httpd
+      state: stopped
+
+  # Removing Package from the particular node
+
+   - name: Remove Service from Particular Node
+     yum:
+      name: httpd
+      state: absent
+  
